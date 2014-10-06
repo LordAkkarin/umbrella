@@ -19,4 +19,4 @@ package umbrella.map.instruction;
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-public class IInvokeDynamicMethodNameMapInstruction implements INamedMapInstruction, IDescriptionMapInstruction {}
+public interface IInvokeDynamicMethodNameMapInstruction extends INamedMapInstruction, IDescriptionMapInstruction {}
