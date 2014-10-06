@@ -15,6 +15,7 @@
 package umbrella.test.utility;
 
 import lombok.Getter;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -41,8 +42,14 @@ public class IOUtilityTest {
 		// create a test object
 		TestClass testClass = new TestClass ();
 
+		// verify
+		Assert.assertFalse ("Test Object is already closed", testClass.closed);
+
 		// close properly
 		IOUtility.closeQuietly (testClass);
+
+		// verify
+		Assert.assertTrue ("Test Object has not been closed", testClass.closed);
 
 		// try to close again (causes an error)
 		IOUtility.closeQuietly (testClass);
@@ -56,7 +63,6 @@ public class IOUtilityTest {
 		/**
 		 * Indicates whether the test class has been closed.
 		 */
-		@Getter
 		private boolean closed = false;
 
 		/**
