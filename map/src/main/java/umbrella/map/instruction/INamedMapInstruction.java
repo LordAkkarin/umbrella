@@ -22,15 +22,9 @@ package umbrella.map.instruction;
 public interface INamedMapInstruction extends IMapInstruction {
 
 	/**
-	 * Returns an inversed version of the instruction.
-	 * @param name The name.
-	 * @return The instruction.
-	 */
-	public IMapInstruction getInverse (String name);
-
-	/**
 	 * Returns the field name.
 	 * @return The name.
+	 * @since 1.0.0
 	 */
 	public String getName ();
 }

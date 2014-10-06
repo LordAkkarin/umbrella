@@ -14,7 +14,7 @@
  */
 package umbrella.map;
 
-import umbrella.map.instruction.IMapInstruction;
+import umbrella.map.instruction.*;
 import umbrella.map.instruction.utility.IMapInstructionRegistry;
 import umbrella.map.instruction.utility.MapInstructionCategory;
 
@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a map.
@@ -31,40 +32,90 @@ import java.util.List;
 public interface IMap {
 
 	/**
-	 * Returns a list of all instructions within the map.
-	 * @return The instruction list.
+	 * Returns a field instruction (or null).
+	 * @param owner The owner type.
+	 * @param name The original name.
+	 * @param description The description.
+	 * @return The instruction.
+	 * @since 1.0.0
 	 */
-	public List<IMapInstruction> getInstructionList ();
+	public IFieldNameInstruction getFieldNameInstruction (String owner, String name, String description);
 
 	/**
-	 * Returns a list of instructions within a specific category.
+	 * Returns an invoke dynamic method name instruction (or null).
+	 * @param name The original name.
+	 * @param description The description.
+	 * @return The instruction.
+	 * @since 1.0.0
+	 */
+	public IInvokeDynamicMethodNameMapInstruction getInvokeDynamicMethodNameInstruction (String name, String description);
+
+	/**
+	 * Returns a method name instruction (or null).
+	 * @param owner The owner type.
+	 * @param name The original name.
+	 * @param description The description.
+	 * @return The instruction.
+	 * @since 1.0.0
+	 */
+	public IMethodNameInstruction getMethodNameInstruction (String owner, String name, String description);
+
+	/**
+	 * Returns a type name instruction (or null).
+	 * @param name The original name.
+	 * @return The instruction.
+	 * @since 1.0.0
+	 */
+	public ITypeNameMapInstruction getTypeNameInstruction (String name);
+
+	/**
+	 * Returns a map of all instructions within the map.
+	 * @return The instruction map.
+	 * @since 1.0.0
+	 */
+	public Map<IMapInstruction, IMapInstruction> getInstructionMap ();
+
+	/**
+	 * Returns a map of all instructions within a specific category.
 	 * @param category The category.
-	 * @return The instruction list.
+	 * @return The instruction map.
+	 * @since 1.0.0
 	 */
-	public List<IMapInstruction> getInstructionList (MapInstructionCategory category);
+	public Map<IMapInstruction, IMapInstruction> getInstructionMap (MapInstructionCategory category);
 
 	/**
-	 * Returns a list of instructions of a specific type.
+	 * Returns a map of instructions of a specific type.
 	 * @param instructionType The instruction type.
 	 * @param deep True if a deep search (checking all categories) shall be performed.
-	 * @param <T> The type.
-	 * @return The instruction list.
+	 * @param <T> The instruction type.
+	 * @return The instruction map.
+	 * @since 1.0.0
 	 */
-	public <T extends IMapInstruction> List<T> getInstructionList (Class<T> instructionType, boolean deep);
+	public <T extends IMapInstruction> Map<T, IMapInstruction> getInstructionMap (Class<T> instructionType, boolean deep);
 
 	/**
-	 * Returns a list of instructions of a specific type (non-deep search).
+	 * Returns a map of instructions of a specific type.
 	 * @param instructionType The instruction type.
-	 * @param <T> The type.
-	 * @return The instruction list.
+	 * @param <T> The instruction type.
+	 * @return The instruction map.
+	 * @since 1.0.0
 	 */
-	public <T extends IMapInstruction> List<T> getInstructionList (Class<T> instructionType);
+	public <T extends IMapInstruction> Map<T, IMapInstruction> getInstructionMap (Class<T> instructionType);
 
 	/**
 	 * Returns the active instruction registry.
 	 * @return The instruction registry.
+	 * @since 1.0.0
 	 */
 	public IMapInstructionRegistry getInstructionRegistry ();
+
+	/**
+	 * Maps a description.
+	 * @param description The description.
+	 * @return The mapped description.
+	 * @since 1.0.0
+	 */
+	public String mapDescription (String description);
 
 	/**
 	 * Maps a field name.
@@ -72,6 +123,7 @@ public interface IMap {
 	 * @param name The original name.
 	 * @param description The description.
 	 * @return The new name.
+	 * @since 1.0.0
 	 */
 	public String mapFieldName (String owner, String name, String description);
 
@@ -89,6 +141,7 @@ public interface IMap {
 	 * @param name The original name.
 	 * @param description The description.
 	 * @return The new name.
+	 * @since 1.0.0
 	 */
 	public String mapMethodName (String owner, String name, String description);
 
@@ -96,12 +149,14 @@ public interface IMap {
 	 * Maps a type.
 	 * @param name The original name.
 	 * @return The new name.
+	 * @since 1.0.0
 	 */
 	public String mapTypeName (String name);
 
 	/**
 	 * Merges all instruction of another map into the map.
 	 * @param map The map.
+	 * @since 1.0.0
 	 */
 	public void merge (IMap map);
 
@@ -109,13 +164,28 @@ public interface IMap {
 	 * Merges all instructions within a specific category into the map.
 	 * @param map The map.
 	 * @param category The category.
+	 * @since 1.0.0
 	 */
 	public void merge (IMap map, MapInstructionCategory category);
+
+	/**
+	 * Deletes all instructions.
+	 * @since 1.0.0
+	 */
+	public void reset ();
+
+	/**
+	 * Removes all instructions of a specific category.
+	 * @param category The category.
+	 * @since 1.0.0
+	 */
+	public void reset (MapInstructionCategory category);
 
 	/**
 	 * Saves a map.
 	 * @param outputStream The output stream.
 	 * @throws IOException Occurs if writing the map is not possible.
+	 * @since 1.0.0
 	 */
 	public void save (OutputStream outputStream) throws IOException;
 
@@ -123,6 +193,7 @@ public interface IMap {
 	 * Saves a map to a file.
 	 * @param file The output file.
 	 * @throws IOException Occurs if writing to the file is not possible.
+	 * @since 1.0.0
 	 */
 	public void save (File file) throws IOException;
 }

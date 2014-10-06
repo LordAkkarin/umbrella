@@ -24,6 +24,7 @@ public interface IDescriptionMapInstruction extends IMapInstruction {
 	/**
 	 * Returns the field description.
 	 * @return The description.
+	 * @since 1.0.0
 	 */
 	public String getDescription ();
 }

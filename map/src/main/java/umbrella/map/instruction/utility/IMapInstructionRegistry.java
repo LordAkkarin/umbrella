@@ -14,7 +14,7 @@
  */
 package umbrella.map.instruction.utility;
 
-import umbrella.map.instruction.IMapInstruction;
+import umbrella.map.instruction.*;
 
 /**
  * Ensures that maps are built upon well known names.
@@ -24,17 +24,38 @@ import umbrella.map.instruction.IMapInstruction;
 public interface IMapInstructionRegistry {
 
 	/**
+	 * Defines the default instruction registry.
+	 */
+	public static final IMapInstructionRegistry DEFAULT = new GenericMapInstructionRegistry () {
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		protected void registerDefaultInstructions () {
+			super.registerDefaultInstructions ();
+
+			this.registerInstruction ("FLD", GenericFieldNameInstruction.class);
+			this.registerInstruction ("IDM", GenericInvokeDynamicMethodNameInstruction.class);
+			this.registerInstruction ("MTD", GenericMethodNameInstruction.class);
+			this.registerInstruction ("TYP", GenericTypeNameInstruction.class);
+		}
+	};
+
+	/**
 	 * Returns an instruction.
 	 * @param name The type name.
 	 * @param instruction The instruction.
 	 * @return The instruction.
+	 * @since 1.0.0
 	 */
-	public IMapInstructionRegistry getElement (String name, String instruction);
+	public IMapInstruction getElement (String name, String instruction);
 
 	/**
 	 * Returns an instruction type.
 	 * @param name The type name.
 	 * @return The instruction type.
+	 * @since 1.0.0
 	 */
 	public Class<? extends IMapInstruction> getElementType (String name);
 
@@ -42,6 +63,7 @@ public interface IMapInstructionRegistry {
 	 * Returns an instruction name.
 	 * @param type The instruction type.
 	 * @return The instruction name.
+	 * @since 1.0.0
 	 */
 	public String getName (Class<? extends IMapInstruction> type);
 
@@ -49,6 +71,7 @@ public interface IMapInstructionRegistry {
 	 * Returns an instruction name.
 	 * @param instruction The instruction.
 	 * @return The instruction name.
+	 * @since 1.0.0
 	 */
 	public String getName (IMapInstruction instruction);
 }

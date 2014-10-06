@@ -66,6 +66,7 @@ public enum MapInstructionCategory {
 	 * Searches for a category based on an instruction type.
 	 * @param instructionType The instruction type.
 	 * @return The category.
+	 * @since 1.0.0
 	 */
 	public static MapInstructionCategory valueOf (Class<? extends IMapInstruction> instructionType) {
 		// check for obvious elements
@@ -94,6 +95,7 @@ public enum MapInstructionCategory {
 	 * Searches for a category based on an instruction.
 	 * @param instruction The instruction.
 	 * @return The category.
+	 * @since 1.0.0
 	 */
 	public static MapInstructionCategory valueOf (@NonNull IMapInstruction instruction) {
 		return valueOf (instruction.getClass ());

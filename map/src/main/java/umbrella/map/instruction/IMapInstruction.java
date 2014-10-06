@@ -14,6 +14,8 @@
  */
 package umbrella.map.instruction;
 
+import umbrella.map.IMap;
+
 /**
  * Represents a single map instruction.
  * @author Johannes Donath <johannesd@evil-co.com>
@@ -22,8 +24,17 @@ package umbrella.map.instruction;
 public interface IMapInstruction {
 
 	/**
+	 * Returns an inversed version of the instruction.
+	 * @param map The map.
+	 * @return The instruction.
+	 * @since 1.0.0
+	 */
+	public IMapInstruction getInverse (IMap map);
+
+	/**
 	 * Returns a serialized version of the instruction.
 	 * @return The serialized instruction.
+	 * @since 1.0.0
 	 */
 	public String serialize ();
 }

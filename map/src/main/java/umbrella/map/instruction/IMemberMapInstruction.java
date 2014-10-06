@@ -24,6 +24,7 @@ public interface IMemberMapInstruction extends IMapInstruction {
 	/**
 	 * Returns the field owner.
 	 * @return The owner.
+	 * @since 1.0.0
 	 */
 	public String getOwner ();
 }
