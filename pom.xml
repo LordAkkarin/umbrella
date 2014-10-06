@@ -102,11 +102,15 @@
 		<!-- Dependency Versions -->
 		<guava.version>18.0</guava.version>
 		<lombok.version>1.14.8</lombok.version>
+		<junit.version>4.11</junit.version>
+		<mockito.version>1.9.5</mockito.version>
 	</properties>
 
 	<!-- Modules -->
 	<modules>
 		<module>map</module>
 		<module>core</module>
+		<module>utility</module>
+		<module>analyzer</module>
 	</modules>
 </project>

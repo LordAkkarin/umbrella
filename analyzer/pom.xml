@@ -25,12 +25,12 @@
 	</parent>
 
 	<!-- Artifact Information -->
-	<artifactId>map</artifactId>
+	<artifactId>analyzer</artifactId>
 	<packaging>jar</packaging>
 
 	<!-- Artifact Metadata -->
-	<name>Umbrella Map Format</name>
-	<description>Provides read and write access to the Umbrella Map Format.</description>
+	<name>Umbrella Analyzer</name>
+	<description>Provides an analysis framework for collecting information about applications before generating maps.</description>
 	<inceptionYear>2014</inceptionYear>
 
 	<!-- Artifact Dependencies -->
