@@ -16,10 +16,7 @@ package umbrella.map.instruction.utility;
 
 import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
-import umbrella.map.instruction.IFieldNameInstruction;
-import umbrella.map.instruction.IMapInstruction;
-import umbrella.map.instruction.IMethodNameInstruction;
-import umbrella.map.instruction.ITypeNameMapInstruction;
+import umbrella.map.instruction.*;
 
 /**
  * @author Johannes Donath <johannesd@evil-co.com>
@@ -27,6 +24,7 @@ import umbrella.map.instruction.ITypeNameMapInstruction;
  */
 public enum MapInstructionCategory {
 	FIELD_NAME (IFieldNameInstruction.class),
+	INVOKE_DYNAMIC_METHOD_NAME (IInvokeDynamicMethodNameMapInstruction.class),
 	METHOD_NAME (IMethodNameInstruction.class),
 	TYPE_NAME (ITypeNameMapInstruction.class),
 	UNKNOWN (null);
