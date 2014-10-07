@@ -41,6 +41,18 @@ public class GenericInvokeDynamicMethodNameInstruction implements IInvokeDynamic
 	private final String description;
 
 	/**
+	 * Constructs a new GenericInvokeDynamicMethodNameInstruction instance.
+	 * @param serialized The serialized instruction.
+	 */
+	public GenericInvokeDynamicMethodNameInstruction (String serialized) {
+		int nameEnd = serialized.indexOf (':');
+
+		// split
+		this.name = serialized.substring (0, nameEnd);
+		this.description = serialized.substring ((nameEnd + 1));
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -54,5 +66,32 @@ public class GenericInvokeDynamicMethodNameInstruction implements IInvokeDynamic
 	@Override
 	public String serialize () {
 		return this.name + ":" + this.description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals (Object obj) {
+		// check basics
+		if (obj == null) return false;
+		if (!(obj instanceof IInvokeDynamicMethodNameMapInstruction)) return false;
+
+		// cast
+		IInvokeDynamicMethodNameMapInstruction instruction = ((IInvokeDynamicMethodNameMapInstruction) obj);
+
+		// check values
+		return (
+			((this.name == null && instruction.getName () == null) || this.name.equals (instruction.getName ())) &&
+			(this.description == null || instruction.getDescription () == null || this.description.equals (instruction.getDescription ()))
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode () {
+		return ((this.name != null ? this.name.hashCode () : 0) + (this.description != null ? this.description.hashCode () : 0) + 1000);
 	}
 }

@@ -48,6 +48,20 @@ public class GenericFieldNameInstruction implements IFieldNameInstruction {
 	private final String description;
 
 	/**
+	 * Constructs a new GenericFieldNameInstruction instance.
+	 * @param serialized The serialized instruction.
+	 */
+	public GenericFieldNameInstruction (String serialized) {
+		int ownerEnd = serialized.indexOf ('#');
+		int nameEnd = serialized.indexOf (':');
+
+		// split
+		this.owner = serialized.substring (0, ownerEnd);
+		this.name = serialized.substring ((ownerEnd + 1), nameEnd);
+		this.description = serialized.substring ((nameEnd + 1));
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -61,5 +75,33 @@ public class GenericFieldNameInstruction implements IFieldNameInstruction {
 	@Override
 	public String serialize () {
 		return this.owner + "#" + this.name + ":" + this.description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals (Object obj) {
+		// check basics
+		if (obj == null) return false;
+		if (!(obj instanceof IFieldNameInstruction)) return false;
+
+		// cast
+		IFieldNameInstruction instruction = ((IFieldNameInstruction) obj);
+
+		// check values
+		return (
+			(this.owner == null || instruction.getOwner () == null || this.owner.equals (instruction.getOwner ())) &&
+			((this.name == null && instruction.getName () == null) || this.name.equals (instruction.getName ())) &&
+			(this.description == null || instruction.getDescription () == null || this.description.equals (instruction.getDescription ()))
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode () {
+		return ((this.owner != null ? this.owner.hashCode () : 0) + (this.name != null ? this.name.hashCode () : 0) + (this.description != null ? this.description.hashCode () : 0) + 1000);
 	}
 }

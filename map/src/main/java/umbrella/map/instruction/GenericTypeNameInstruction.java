@@ -48,4 +48,30 @@ public class GenericTypeNameInstruction implements ITypeNameMapInstruction {
 	public String serialize () {
 		return this.name;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals (Object obj) {
+		// check basics
+		if (obj == null) return false;
+		if (!(obj instanceof ITypeNameMapInstruction)) return false;
+
+		// cast
+		ITypeNameMapInstruction instruction = ((ITypeNameMapInstruction) obj);
+
+		// check values
+		return (
+			((this.name == null && instruction.getName () == null) || this.name.equals (instruction.getName ()))
+		);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode () {
+		return (this.name.hashCode ()) + 1000;
+	}
 }
