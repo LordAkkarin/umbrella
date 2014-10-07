@@ -194,11 +194,9 @@ public class GenericMap implements IMap {
 	}
 
 	/**
-	 * Adds a new instruction.
-	 * @param original The original.
-	 * @param replacement The replacement.
-	 * @since 1.0.0
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void addInstruction (@NonNull IMapInstruction original, @NonNull IMapInstruction replacement) {
 		// get categories
 		MapInstructionCategory originalCategory = MapInstructionCategory.valueOf (original);

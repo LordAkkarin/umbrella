@@ -32,6 +32,14 @@ import java.util.Map;
 public interface IMap {
 
 	/**
+	 * Adds an instruction.
+	 * @param original The original.
+	 * @param replacement The replacement.
+	 * @since 1.0.0
+	 */
+	public void addInstruction (IMapInstruction original, IMapInstruction replacement);
+
+	/**
 	 * Returns a field instruction (or null).
 	 * @param owner The owner type.
 	 * @param name The original name.
