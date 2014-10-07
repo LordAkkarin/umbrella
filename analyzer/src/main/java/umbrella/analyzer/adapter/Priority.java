@@ -14,32 +14,27 @@
  */
 package umbrella.analyzer.adapter;
 
-import umbrella.analyzer.ClassReport;
-
 /**
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-public interface IAnalyzerAdapter {
+public enum Priority {
+	HIGHEST (2),
+	HIGH (1),
+	NORMAL (0),
+	LOW (-1),
+	LOWEST (-2);
 
 	/**
-	 * Checks whether the specified class exists within this adapter.
-	 * @param classPath The class path.
-	 * @return True if the class exists.
+	 * Stores the numerical representation.
 	 */
-	public boolean classExists (String classPath);
+	public final int numeric;
 
 	/**
-	 * Returns the adapter priority.
-	 * @return The priority.
+	 * Constructs a new Priority instance.
+	 * @param numeric The numeric value.
 	 */
-	public Priority getPriority ();
-
-	/**
-	 * Generates a report for the specified class.
-	 * @param classPath The class path.
-	 * @return The report.
-	 * @throws Exception Occurs if reading the class file is not possible.
-	 */
-	public ClassReport getReport (String classPath) throws Exception;
+	private Priority (int numeric) {
+		this.numeric = numeric;
+	}
 }

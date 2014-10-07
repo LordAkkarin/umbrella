@@ -14,32 +14,19 @@
  */
 package umbrella.analyzer.adapter;
 
-import umbrella.analyzer.ClassReport;
+import java.util.Comparator;
 
 /**
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-public interface IAnalyzerAdapter {
+public class AnalyzerComparator implements Comparator<IAnalyzerAdapter> {
 
 	/**
-	 * Checks whether the specified class exists within this adapter.
-	 * @param classPath The class path.
-	 * @return True if the class exists.
+	 * {@inheritDoc}
 	 */
-	public boolean classExists (String classPath);
-
-	/**
-	 * Returns the adapter priority.
-	 * @return The priority.
-	 */
-	public Priority getPriority ();
-
-	/**
-	 * Generates a report for the specified class.
-	 * @param classPath The class path.
-	 * @return The report.
-	 * @throws Exception Occurs if reading the class file is not possible.
-	 */
-	public ClassReport getReport (String classPath) throws Exception;
+	@Override
+	public int compare (IAnalyzerAdapter o1, IAnalyzerAdapter o2) {
+		return Math.max (-1, Math.min (1, (o1.getPriority ().numeric - o2.getPriority ().numeric)));
+	}
 }

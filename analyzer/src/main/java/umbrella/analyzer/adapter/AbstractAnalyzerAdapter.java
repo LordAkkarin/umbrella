@@ -14,32 +14,28 @@
  */
 package umbrella.analyzer.adapter;
 
-import umbrella.analyzer.ClassReport;
+import lombok.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-public interface IAnalyzerAdapter {
+@AllArgsConstructor
+public abstract class AbstractAnalyzerAdapter implements IAnalyzerAdapter {
 
 	/**
-	 * Checks whether the specified class exists within this adapter.
-	 * @param classPath The class path.
-	 * @return True if the class exists.
+	 * Stores the internal logger instance.
 	 */
-	public boolean classExists (String classPath);
+	@Getter (AccessLevel.PROTECTED)
+	private static final Logger logger = LogManager.getLogger (JarAnalyzerAdapter.class);
 
 	/**
-	 * Returns the adapter priority.
-	 * @return The priority.
+	 * Stores the priority.
 	 */
-	public Priority getPriority ();
-
-	/**
-	 * Generates a report for the specified class.
-	 * @param classPath The class path.
-	 * @return The report.
-	 * @throws Exception Occurs if reading the class file is not possible.
-	 */
-	public ClassReport getReport (String classPath) throws Exception;
+	@Getter
+	@Setter
+	@NonNull
+	private Priority priority;
 }

@@ -16,7 +16,6 @@ package umbrella.analyzer.adapter;
 
 import com.google.common.base.Preconditions;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.ClassReader;
 import umbrella.analyzer.ClassReport;
 import umbrella.utility.IOUtility;
@@ -30,8 +29,7 @@ import java.util.zip.ZipEntry;
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-@RequiredArgsConstructor
-public class JarAnalyzerAdapter implements IAnalyzerAdapter {
+public class JarAnalyzerAdapter extends AbstractAnalyzerAdapter {
 
 	/**
 	 * Stores the jar file.
@@ -40,11 +38,29 @@ public class JarAnalyzerAdapter implements IAnalyzerAdapter {
 	private final JarFile file;
 
 	/**
+	 * Constructs a new JarAnalyzerAdapter instance.
+	 * @param file The file.
+	 * @param priority The priority.
+	 */
+	public JarAnalyzerAdapter (@NonNull JarFile file, @NonNull Priority priority) {
+		super (priority);
+		this.file = file;
+	}
+
+	/**
+	 * Constructs a new JarAnalyzerAdapter instance.
+	 * @param file The file.
+	 */
+	public JarAnalyzerAdapter (@NonNull JarFile file) {
+		this (file, Priority.NORMAL);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean classExists (@NonNull String classPath) {
-		return (this.file.getEntry (classPath) != null);
+		return (this.file.getEntry (classPath + ".class") != null);
 	}
 
 	/**
@@ -52,6 +68,12 @@ public class JarAnalyzerAdapter implements IAnalyzerAdapter {
 	 */
 	@Override
 	public ClassReport getReport (@NonNull String classPath) throws IOException {
+		// log
+		getLogger ().trace ("Generating report for class \"" + classPath + "\" within adapter " + this.getClass ().getName () + ".");
+
+		// append class suffix
+		classPath += ".class";
+
 		// get entry
 		ZipEntry entry = this.file.getEntry (classPath);
 

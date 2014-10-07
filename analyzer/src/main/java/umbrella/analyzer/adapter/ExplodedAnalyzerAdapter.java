@@ -15,7 +15,6 @@
 package umbrella.analyzer.adapter;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.objectweb.asm.ClassReader;
 import umbrella.analyzer.ClassReport;
 import umbrella.utility.IOUtility;
@@ -27,13 +26,30 @@ import java.io.FileInputStream;
  * @author Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
-@RequiredArgsConstructor
-public class ExplodedAnalyzerAdapter implements IAnalyzerAdapter {
+public class ExplodedAnalyzerAdapter extends AbstractAnalyzerAdapter {
 
 	/**
 	 * Stores the parent directory.
 	 */
 	private final File parent;
+
+	/**
+	 * Constructs a new ExplodedAnalyzerAdapter instance.
+	 * @param file The file.
+	 * @param priority The priority.
+	 */
+	public ExplodedAnalyzerAdapter (@NonNull File file, @NonNull Priority priority) {
+		super (priority);
+		this.parent = file;
+	}
+
+	/**
+	 * Constructs a new ExplodedAnalyzerAdapter instance.
+	 * @param file The file.
+	 */
+	public ExplodedAnalyzerAdapter (@NonNull File file) {
+		this (file, Priority.NORMAL);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -57,6 +73,9 @@ public class ExplodedAnalyzerAdapter implements IAnalyzerAdapter {
 	 */
 	@Override
 	public ClassReport getReport (String classPath) throws Exception {
+		// log
+		getLogger ().trace ("Generating report for class \"" + classPath + "\" within adapter " + this.getClass ().getName () + ".");
+
 		// initialize variable
 		FileInputStream inputStream = null;
 

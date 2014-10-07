@@ -14,10 +14,19 @@
  */
 package umbrella.analyzer;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import umbrella.analyzer.adapter.AnalyzerComparator;
 import umbrella.analyzer.adapter.IAnalyzerAdapter;
+import umbrella.analyzer.adapter.JavaAnalyzerAdapter;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,16 +37,39 @@ import java.util.List;
 public class Analyzer {
 
 	/**
+	 * Stores the internal logger instance.
+	 */
+	@Getter (AccessLevel.PROTECTED)
+	private static final Logger logger = LogManager.getLogger (Analyzer.class);
+
+	/**
 	 * Stores a list of classpath elements.
 	 */
 	private final List<IAnalyzerAdapter> adapterList = new ArrayList<> ();
+
+	/**
+	 * Constructs a new Analyzer instance.
+	 */
+	public Analyzer () {
+		super ();
+
+		try {
+			this.addAdapter (new JavaAnalyzerAdapter (new File (System.getProperty ("java.home"))));
+		} catch (IOException ex) {
+			getLogger ().error ("Could not load Java standard library", ex);
+		}
+	}
 
 	/**
 	 * Adds a new analyzer adapter.
 	 * @param adapter The adapter.
 	 */
 	public void addAdapter (@NonNull IAnalyzerAdapter adapter) {
+		// add element
 		this.adapterList.add (adapter);
+
+		// sort list
+		Collections.sort (this.adapterList, new AnalyzerComparator ());
 	}
 
 	/**
