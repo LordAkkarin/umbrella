@@ -24,6 +24,7 @@ import umbrella.analyzer.ClassReport;
 import umbrella.generator.name.INameGenerator;
 import umbrella.map.IMap;
 import umbrella.map.instruction.GenericFieldNameInstruction;
+import umbrella.map.instruction.GenericInvokeDynamicMethodNameInstruction;
 import umbrella.map.instruction.GenericMethodNameInstruction;
 import umbrella.map.instruction.GenericTypeNameInstruction;
 
@@ -266,7 +267,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 						getLogger ().trace ("Method \"" + this.currentClass + "#" + name + ":" + desc + "\" seems to be overriding a method from \"" + this.superName + "\". Skipping.");
 
 						// skip further execution
-						return super.visitMethod (access, name, desc, signature, exceptions);
+						return new GeneratorMethodVisitor (this.map, super.visitMethod (access, name, desc, signature, exceptions));
 					}
 				}
 
@@ -283,7 +284,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 						getLogger ().trace ("Method \"" + this.currentClass + "#" + name + ":" + desc + "\" seems to be overriding a method from \"" + parent + "\". Skipping.");
 
 						// skip further execution
-						return super.visitMethod (access, name, desc, signature, exceptions);
+						return new GeneratorMethodVisitor (this.map, super.visitMethod (access, name, desc, signature, exceptions));
 					}
 				}
 			} catch (Exception ex) {
@@ -292,7 +293,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 				getLogger ().error ("The method has been skipped and will not be renamed.");
 
 				// skip further execution
-				return super.visitMethod (access, name, desc, signature, exceptions);
+				return new GeneratorMethodVisitor (this.map, super.visitMethod (access, name, desc, signature, exceptions));
 			}
 
 			// search for existing mappings
@@ -301,7 +302,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 				getLogger ().trace ("Method \"" + this.currentClass + "#" + name + ":" + desc + "\" has already been mapped to \"" + this.map.mapMethodName (this.currentClass, name, desc) + "\". Skipping.");
 
 				// skip further execution
-				return super.visitMethod (access, name, desc, signature, exceptions);
+				return new GeneratorMethodVisitor (this.map, super.visitMethod (access, name, desc, signature, exceptions));
 			}
 
 			// generate a new name
@@ -321,7 +322,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 			this.map.addInstruction (new GenericMethodNameInstruction (this.currentClass, name, desc), instruction);
 
 			// call parent
-			return super.visitMethod (access, name, desc, signature, exceptions);
+			return new GeneratorMethodVisitor (this.map, super.visitMethod (access, name, desc, signature, exceptions));
 		}
 
 		/**
@@ -359,6 +360,62 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 
 			// call parent
 			return super.visitField (access, name, desc, signature, value);
+		}
+	}
+
+	/**
+	 * Provides a method visitor.
+	 */
+	private class GeneratorMethodVisitor extends MethodVisitor {
+
+		/**
+		 * Stores the parent map instance.
+		 */
+		private final IMap map;
+
+		/**
+		 * Constructs a new GeneratorMethodVisitor instance.
+		 * @param mv The method visitor.
+		 */
+		public GeneratorMethodVisitor (IMap map, MethodVisitor mv) {
+			super (Opcodes.ASM5, mv);
+			this.map = map;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void visitInvokeDynamicInsn (String name, String desc, Handle bsm, Object... bsmArgs) {
+			super.visitInvokeDynamicInsn (name, desc, bsm, bsmArgs);
+
+			// trace log
+			getLogger ().trace ("Generating mapping for invoke dynamic \"" + name + ":" + desc + "\" ...");
+
+			// search for existing mapping
+			if (this.map.getInvokeDynamicMethodNameInstruction (name, desc) != null) {
+				// trace log
+				getLogger ().trace ("Invoke dynamic \"" + name + ":" + desc + "\" has already been mapped to \"" + this.map.mapInvokeDynamicMethodName (name, desc) + "\". Skipping.");
+
+				// skip further execution
+				return;
+			}
+
+			// generate a new name
+			String replacementName = null;
+			GenericInvokeDynamicMethodNameInstruction instruction;
+
+			do {
+				// generate a name
+				replacementName = getNameGenerator ().generateMethodName (replacementName);
+
+				// create a mapping
+				instruction = new GenericInvokeDynamicMethodNameInstruction (replacementName, desc);
+			} while (this.map.mappingExists (instruction));
+
+			// add instruction
+			getLogger ().trace ("Mapped invoke dynamic \"" + name + ":" + desc + "\" to \"" + instruction.getName () + "\".");
+			this.map.addInstruction (new GenericInvokeDynamicMethodNameInstruction (name, desc), instruction);
 		}
 	}
 }
