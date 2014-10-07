@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 
 /**
  * @author Johannes Donath <johannesd@evil-co.com>
