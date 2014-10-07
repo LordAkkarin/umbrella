@@ -30,6 +30,20 @@
 
 	<!-- Artifact Dependencies -->
 	<dependencies>
+		<!-- Umbrella -->
+		<dependency>
+			<groupId>umbrella</groupId>
+			<artifactId>map</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ASM -->
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-debug-all</artifactId>
+			<version>${asm.version}</version>
+		</dependency>
+
 		<!-- Guava -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
