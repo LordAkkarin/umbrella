@@ -108,6 +108,20 @@
 		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
 
+		<!-- Test Resources -->
+		<testResources>
+			<testResource>
+				<directory>${project.basedir}/src/test/resources</directory>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+
+				<includes>
+					<include>**/*</include>
+					<include>*</include>
+				</includes>
+			</testResource>
+		</testResources>
+
 		<!-- Build Plugins -->
 		<plugins>
 			<!-- Java Compiler -->
