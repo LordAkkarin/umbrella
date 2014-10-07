@@ -40,6 +40,7 @@ public class GenericMapInstructionRegistry implements IMapInstructionRegistry {
 	 */
 	public GenericMapInstructionRegistry () {
 		super ();
+		this.registerDefaultInstructions ();
 	}
 
 	/**
