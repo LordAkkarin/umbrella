@@ -327,6 +327,17 @@ public class GenericMap implements IMap {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public boolean mappingExists (@NonNull IMapInstruction instruction) {
+		for (Table.Cell<MapInstructionCategory, IMapInstruction, IMapInstruction> entry : this.instructionMap.cellSet ()) {
+			if (entry.getValue ().equals (instruction)) return true;
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String mapFieldName (String owner, String name, String description) {
 		IFieldNameInstruction instruction = this.getFieldNameInstruction (owner, name, description);
 		return (instruction != null ? instruction.getName () : name);

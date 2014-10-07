@@ -118,6 +118,13 @@ public interface IMap {
 	public String mapDescription (String description);
 
 	/**
+	 * Checks whether a specific mapping result exists.
+	 * @param instruction The instruction.
+	 * @return True if the mapping exists.
+	 */
+	public boolean mappingExists (IMapInstruction instruction);
+
+	/**
 	 * Maps a field name.
 	 * @param owner The owner type.
 	 * @param name The original name.
