@@ -1,0 +1,11 @@
+// Test File
+// ---------
+// Provides a simple test map to ensure
+// that parsing works correctly.
+
+// That was an empty line btw ;-)
+
+TYP Test TYP A
+FLD Test#field1:Ljava/lang/String FLD A#a:Ljava/lang/String
+MTD Test#method1:V MTD A#a:V
+IDM dynamic1:I IDM a:I
