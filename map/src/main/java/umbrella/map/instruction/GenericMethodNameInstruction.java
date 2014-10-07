@@ -30,7 +30,6 @@ public class GenericMethodNameInstruction implements IMethodNameInstruction {
 	 * Stores the owner type.
 	 */
 	@Getter
-	@NonNull
 	public final String owner;
 
 	/**
@@ -44,7 +43,6 @@ public class GenericMethodNameInstruction implements IMethodNameInstruction {
 	 * Stores the method description.
 	 */
 	@Getter
-	@NonNull
 	public final String description;
 
 	/**

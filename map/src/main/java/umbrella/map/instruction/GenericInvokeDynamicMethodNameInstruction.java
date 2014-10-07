@@ -37,7 +37,6 @@ public class GenericInvokeDynamicMethodNameInstruction implements IInvokeDynamic
 	 * Stores the method description.
 	 */
 	@Getter
-	@NonNull
 	private final String description;
 
 	/**

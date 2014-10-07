@@ -30,7 +30,6 @@ public class GenericFieldNameInstruction implements IFieldNameInstruction {
 	 * Stores the field owner.
 	 */
 	@Getter
-	@NonNull
 	private final String owner;
 
 	/**
@@ -44,7 +43,6 @@ public class GenericFieldNameInstruction implements IFieldNameInstruction {
 	 * Stores the field description.
 	 */
 	@Getter
-	@NonNull
 	private final String description;
 
 	/**
