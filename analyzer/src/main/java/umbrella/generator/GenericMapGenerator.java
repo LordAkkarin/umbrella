@@ -36,12 +36,6 @@ import umbrella.map.instruction.GenericTypeNameInstruction;
 public class GenericMapGenerator extends AbstractMapGenerator {
 
 	/**
-	 * Stores the internal logger instance.
-	 */
-	@Getter (AccessLevel.PROTECTED)
-	private static final Logger logger = LogManager.getLogger (GenericMapGenerator.class);
-
-	/**
 	 * Stores the parent name generator.
 	 */
 	@Getter
@@ -102,6 +96,9 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 	 */
 	@Override
 	public void generate (@NonNull ClassReader classReader, @NonNull IMap map, Analyzer analyzer) throws Exception {
+		// store time
+		long currentTime = System.currentTimeMillis ();
+
 		// create a default analyzer if needed
 		if (analyzer == null) analyzer = new Analyzer ();
 
@@ -110,6 +107,9 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 
 		// start generation
 		classReader.accept (classVisitor, ClassReader.SKIP_DEBUG | ClassReader.EXPAND_FRAMES);
+
+		// log
+		getLogger ().debug ("Map generation for class took " + (System.currentTimeMillis () - currentTime) + " ms.");
 	}
 
 	/**

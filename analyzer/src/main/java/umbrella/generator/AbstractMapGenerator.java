@@ -14,7 +14,11 @@
  */
 package umbrella.generator;
 
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import umbrella.analyzer.Analyzer;
 import umbrella.map.GenericMap;
@@ -33,6 +37,12 @@ import java.util.jar.JarFile;
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.com>
  */
 public abstract class AbstractMapGenerator implements IMapGenerator {
+
+	/**
+	 * Stores an internal logger instance.
+	 */
+	@Getter (AccessLevel.PROTECTED)
+	private static final Logger logger = LogManager.getLogger (AbstractMapGenerator.class);
 
 	/**
 	 * {@inheritDoc}
@@ -165,6 +175,9 @@ public abstract class AbstractMapGenerator implements IMapGenerator {
 	 */
 	@Override
 	public void generate (@NonNull JarFile file, @NonNull IMap map, Analyzer analyzer) throws Exception {
+		// store time
+		long startTime = System.currentTimeMillis ();
+
 		// iterate over class file elements
 		Enumeration<JarEntry> entries = file.entries ();
 
@@ -189,6 +202,9 @@ public abstract class AbstractMapGenerator implements IMapGenerator {
 				IOUtility.closeQuietly (entryStream);
 			}
 		}
+
+		// log time consumption
+		getLogger ().debug ("Map generation for jar file took " + (System.currentTimeMillis () - startTime) + " ms.");
 	}
 
 	/**
