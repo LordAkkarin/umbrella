@@ -121,6 +121,7 @@ public interface IMap {
 	 * Checks whether a specific mapping result exists.
 	 * @param instruction The instruction.
 	 * @return True if the mapping exists.
+	 * @since 1.0.0
 	 */
 	public boolean mappingExists (IMapInstruction instruction);
 
