@@ -38,8 +38,21 @@
 		<!-- Umbrella -->
 		<dependency>
 			<groupId>umbrella</groupId>
+			<artifactId>map</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>umbrella</groupId>
 			<artifactId>utility</artifactId>
 			<version>${project.version}</version>
+		</dependency>
+
+		<!-- ASM -->
+		<dependency>
+			<groupId>org.ow2.asm</groupId>
+			<artifactId>asm-debug-all</artifactId>
+			<version>${asm.version}</version>
 		</dependency>
 
 		<!-- Guava -->
@@ -47,6 +60,18 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
+		</dependency>
+
+		<!-- Log4J 2 -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
 		</dependency>
 
 		<!-- Lombok -->
