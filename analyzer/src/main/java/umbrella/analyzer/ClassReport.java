@@ -57,6 +57,15 @@ public class ClassReport {
 	}
 
 	/**
+	 * Checks whether a method is known.
+	 * @param instruction The instruction.
+	 * @return True if the method is known.
+	 */
+	public boolean isKnownMethod (IMethodNameInstruction instruction) {
+		return this.knownMethods.contains (instruction);
+	}
+
+	/**
 	 * Analyzes class files.
 	 */
 	private class ReportVisitor extends ClassVisitor {
