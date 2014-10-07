@@ -57,6 +57,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- JUnit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
