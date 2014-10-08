@@ -191,16 +191,11 @@ public abstract class AbstractMapGenerator implements IMapGenerator {
 			// prepare stream
 			InputStream entryStream = null;
 
-			// process entry
-			try {
-				// open stream
-				entryStream = file.getInputStream (entry);
+			// open stream
+			entryStream = file.getInputStream (entry);
 
-				// generate into map
-				this.generate (entryStream, map, analyzer);
-			} finally {
-				IOUtility.closeQuietly (entryStream);
-			}
+			// generate into map
+			this.generate (entryStream, map, analyzer);
 		}
 
 		// log time consumption
