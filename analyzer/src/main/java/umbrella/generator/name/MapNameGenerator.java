@@ -39,7 +39,7 @@ public class MapNameGenerator implements INameGenerator {
 	/**
 	 * Defines the character offset.
 	 */
-	public static final int UNICODE_OFFSET = 32;
+	public static final int UNICODE_OFFSET = 9312;
 
 	/**
 	 * Static Initializer
