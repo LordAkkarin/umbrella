@@ -153,9 +153,22 @@ public class Umbrella {
 	public static void apply (@NonNull File input, @NonNull File output, @NonNull IMap map) throws IOException {
 		// handle directories
 		if (input.exists () && input.isDirectory ()) {
+			// create output directory
+			output.mkdirs ();
+
+			// verify
+			if (!output.isDirectory ()) throw new IOException ("No such directory: " + output.getAbsolutePath ());
+
 			// iterate over all files
 			for (File current : input.listFiles ()) {
-				apply (current, new File (output, current.toURI ().relativize (current.toURI ()).getPath ()), map);
+				// get file
+				File outputFile = new File (output, current.toURI ().relativize (current.toURI ()).getPath ());
+
+				// create directories
+				outputFile.getAbsoluteFile ().getParentFile ().mkdirs ();
+
+				// apply
+				apply (current, outputFile, map);
 			}
 
 			// skip further execution
