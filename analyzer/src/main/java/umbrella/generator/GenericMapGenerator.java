@@ -109,7 +109,7 @@ public class GenericMapGenerator extends AbstractMapGenerator {
 		classReader.accept (classVisitor, ClassReader.SKIP_DEBUG | ClassReader.EXPAND_FRAMES);
 
 		// log
-		getLogger ().debug ("Map generation for class took " + (System.currentTimeMillis () - currentTime) + " ms.");
+		getLogger ().debug ("Map generation for class \"" + classReader.getClassName () + "\" took " + (System.currentTimeMillis () - currentTime) + " ms.");
 	}
 
 	/**
