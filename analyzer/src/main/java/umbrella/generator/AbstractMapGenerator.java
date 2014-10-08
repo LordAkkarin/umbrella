@@ -116,6 +116,9 @@ public abstract class AbstractMapGenerator implements IMapGenerator {
 		if (file.isDirectory ()) {
 			// iterate over files
 			for (File element : file.listFiles ()) {
+				// skip non-class files
+				if (!element.isDirectory () && !element.getName ().endsWith (".class")) continue;
+
 				// append to map
 				this.generate (element, map, analyzer);
 			}
